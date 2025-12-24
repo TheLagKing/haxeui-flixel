@@ -40,7 +40,7 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
     
     #else
     
-    private var _fr:FileReferenceList = null;
+    private var _fr:Null<FileReferenceList>;
     private var _refToInfo:Map<FileReference, SelectedFileInfo>;
     private var _infos:Array<SelectedFileInfo>;
     
