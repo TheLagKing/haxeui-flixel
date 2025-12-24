@@ -34,7 +34,7 @@ class SaveFileDialogImpl extends SaveFileDialogBase {
     
     #else
     
-    private var _fr:FileReference = null;
+    private var _fr:Null<FileReferenceList>;
     
     public override function show() {
         if (fileInfo == null || (fileInfo.text == null && fileInfo.bytes == null)) {
