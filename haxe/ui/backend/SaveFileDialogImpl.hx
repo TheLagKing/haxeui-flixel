@@ -3,7 +3,9 @@ package haxe.ui.backend;
 #if !js
 import openfl.events.Event;
 import openfl.net.FileFilter;
+#if desktop
 import openfl.net.FileReference;
+#end
 import openfl.utils.ByteArray;
 #end
 
@@ -33,7 +35,7 @@ class SaveFileDialogImpl extends SaveFileDialogBase {
     }
     
     #else
-    
+    #if desktop
     private var _fr:Null<FileReferenceList>;
     
     public override function show() {
@@ -70,6 +72,6 @@ class SaveFileDialogImpl extends SaveFileDialogBase {
         _fr.removeEventListener(Event.CANCEL, onCancel);
         _fr = null;
     }
-    
+    #end
     #end
 }
