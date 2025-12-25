@@ -8,8 +8,10 @@ import haxe.io.Bytes;
 import haxe.ui.containers.dialogs.Dialog.DialogButton;
 import openfl.events.Event;
 import openfl.net.FileFilter;
+#if desktop
 import openfl.net.FileReference;
 import openfl.net.FileReferenceList;
+#end
 #end
 
 
@@ -39,7 +41,7 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
     }
     
     #else
-    
+    #if desktop
     private var _fr:Null<FileReferenceList>;
     private var _refToInfo:Map<FileReference, SelectedFileInfo>;
     private var _infos:Array<SelectedFileInfo>;
@@ -91,6 +93,7 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
             #if sys
             fullPath = @:privateAccess fileRef.__path;
             #end
+            #end
 
             var info:SelectedFileInfo = {
                 isBinary: false,
@@ -115,6 +118,7 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
     }
     
     private function onFileComplete(e:Event) {
+        #if desktop
         var fileRef = cast(e.target, FileReference);
         fileRef.removeEventListener(Event.COMPLETE, onFileComplete);
         var info = _refToInfo.get(fileRef);
@@ -134,6 +138,7 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
             _refToInfo = null;
             dialogConfirmed(copy);
         }
+        #end
     }
 
     private function isMapEmpty() {
