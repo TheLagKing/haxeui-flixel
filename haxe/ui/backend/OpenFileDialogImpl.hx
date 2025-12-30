@@ -147,6 +147,7 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
     }
 
     private function isMapEmpty() {
+        #if desktop
         if (_refToInfo == null) {
             return true;
         }
@@ -157,6 +158,7 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
         }
         
         return (n == 0);
+        #end
     }
     
     private function onCancel(e:Event) {
