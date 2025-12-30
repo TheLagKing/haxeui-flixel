@@ -44,15 +44,18 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
     #if desktop
     private var _fr:Null<FileReferenceList>;
     private var _refToInfo:Map<FileReference, SelectedFileInfo>;
+    #end
     private var _infos:Array<SelectedFileInfo>;
     
     public override function show() {
+        #if desktop
         _refToInfo = new Map<FileReference, SelectedFileInfo>();
         _infos = [];
         _fr = new FileReferenceList();
         _fr.addEventListener(Event.SELECT, onSelect, false, 0, true);
         _fr.addEventListener(Event.CANCEL, onCancel, false, 0, true);
         _fr.browse(buildFileFilters());
+        #end
     }
     
     private function buildFileFilters():Array<FileFilter> {
@@ -84,7 +87,9 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
     }
     
     private function onSelect(e:Event) {
+        #if desktop
         var fileList:Array<FileReference> = _fr.fileList;
+        
         destroyFileRef();
         var infos:Array<SelectedFileInfo> = [];
         for (fileRef in fileList) {
@@ -93,7 +98,7 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
             #if sys
             fullPath = @:privateAccess fileRef.__path;
             #end
-            #end
+            
 
             var info:SelectedFileInfo = {
                 isBinary: false,
@@ -114,7 +119,7 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
                 fileRef.load();
             }
         }
-        
+        #end
     }
     
     private function onFileComplete(e:Event) {
@@ -160,6 +165,7 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
     }
     
     private function destroyFileRef() {
+        #if desktop
         if (_fr == null) {
             return;
         }
@@ -167,7 +173,7 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
         _fr.removeEventListener(Event.SELECT, onSelect);
         _fr.removeEventListener(Event.CANCEL, onCancel);
         _fr = null;
+        #end
     }
-    
-    #end
+
 }
