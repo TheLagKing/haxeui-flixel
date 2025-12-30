@@ -176,4 +176,5 @@ class OpenFileDialogImpl extends OpenFileDialogBase {
         #end
     }
 
+    #end
 }
